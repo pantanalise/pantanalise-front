@@ -12,6 +12,7 @@ import githubIcon from '../assets/icons/github-icon.svg'
 export default function Home() {
   const [text, setText] = useState('')
   const [length, setLength] = useState(0)
+  const [showResult, setShowResult] = useState(false)
 
   const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value)
@@ -20,69 +21,78 @@ export default function Home() {
 
   // TODO: Call API endpoint
   const handleSubmit = (event: React.FormEvent) => {
-    alert(text)
+    setShowResult(true)
+    // alert(text)
     event.preventDefault()
     // TODO: add to history
   }
 
   return (
     <div className="flex w-[60vw] flex-col space-y-8">
+      {/* history modal */}
+      {}
       {/* title */}
-      <h1 className="mt-6 text-center font-montserrat text-4xl">Engage Max</h1>
+      <h1 className="mt-6 text-center font-montserrat text-6xl">Engage Max</h1>
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         {/* input area */}
         <textarea
+          defaultValue={text}
           onChange={textAreaChange}
           maxLength={280}
-          className="text-body focus:border-1.5 block h-[25vh] w-full resize-none self-center rounded-lg border border-greyish bg-transparent p-2.5 font-ptmono text-sm text-greyish focus:border-black focus:text-black focus:outline-none focus:ring-black"
-          placeholder="Digite um Tweet"
-        >
-          {text}
-        </textarea>
+          className="text-body focus:border-1.5 block h-[25vh] w-full resize-none rounded-lg border border-grey bg-transparent p-2.5 font-ptmono text-sm text-grey focus:border-black focus:text-black focus:outline-black"
+          placeholder="Digite um tweet"
+        />
         {/* row: history - char counter - submit */}
         <div className="flex flex-row justify-between">
           {/* history button */}
-          <button className="flex items-center gap-x-2">
-            <p>Histórico</p>
+          <button className="flex items-center gap-x-2 hover:scale-105">
+            <p className="font-ptmono text-sm">Histórico</p>
             <Image src={clockIcon} alt="Clock icon" />
           </button>
           {/* char counter */}
-          <p>{length ?? 0}/280</p>
+          <p className="font-ptmono text-sm">{length ?? 0}/280</p>
           {/* submit button */}
-          <button className="flex items-center gap-x-2">
-            <p>Analisar</p>
+          <button className="flex items-center gap-x-2 hover:scale-105">
+            <p className="font-ptmono text-sm">Analisar</p>
             <Image src={arrowIcon} alt="Arrow icon" />
           </button>
         </div>
       </form>
 
       {/* result card */}
-      <div className="flex w-full flex-col rounded-lg bg-white p-4 text-justify">
-        {/* result title */}
-        <h2 className="mb-2 font-ptmono text-3xl">Resultado</h2>
-        {/* tweet text */}
-        <p className="text-body whitespace-pre-line font-ptmono">{`"${text}"`}</p>
-        {/* results info row */}
-        <div className="flex w-full justify-evenly self-center">
-          {/* likes section */}
-          <div className="flex flex-row items-center gap-x-2">
-            <Image src={likeIcon} alt="Heart icon" />
-            <p className="font-ptmono text-3xl">350</p>
-          </div>
-          {/* retweets section */}
-          <div className="flex flex-row items-center gap-x-2">
-            <Image src={retweetIcon} alt="Retweet icon" />
-            <p className="font-ptmono text-3xl">350</p>
+      {showResult && (
+        <div className="flex w-full flex-col gap-y-3 whitespace-pre-wrap rounded-lg bg-white p-6 text-justify font-ptmono">
+          {
+            // TODO: change text to use result text
+            // TODO: change likeNumber to use result likeNumber
+            // TODO: change retweetNumber to use result retweetNumber
+          }
+          {/* result title */}
+          <h2 className="text-3xl">Resultado</h2>
+          {/* tweet text */}
+          <p className="text-body whitespace-pre-line">{`"${text}"`}</p>
+          {/* results info row */}
+          <div className="flex w-full justify-evenly self-center">
+            {/* likes section */}
+            <div className="mt-4 flex flex-row items-center gap-x-2">
+              <Image src={likeIcon} alt="Heart icon" />
+              <p className="text-3xl">350</p>
+            </div>
+            {/* retweets section */}
+            <div className="flex flex-row items-center gap-x-2">
+              <Image src={retweetIcon} alt="Retweet icon" />
+              <p className="text-3xl">350</p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* info card */}
-      <div className="flex w-full flex-col rounded-lg bg-white p-4 text-justify">
+      <div className="flex w-full flex-col rounded-lg bg-white p-6 text-justify font-ptmono">
         {/* info title */}
-        <h2 className="mb-2 font-ptmono text-3xl">Descrição</h2>
+        <h2 className="mb-3 text-3xl">Descrição</h2>
         {/* info text */}
-        <p className="text-body whitespace-pre-line font-ptmono">
+        <p className="text-body whitespace-pre-line">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed gravida
           sed erat sed pharetra. Sed quis nisi lacus. Ut consectetur nibh sit
           amet leo finibus bibendum. Donec iaculis augue eros, ac dignissim
@@ -91,8 +101,9 @@ export default function Home() {
           Suspendisse a erat ante. In non dignissim nisl. Curabitur risus ipsum,
           volutpat eget euismod et, lacinia vel nisl. In ultrices, felis ut
           laoreet dapibus, leo nunc mollis arcu, at sollicitudin dui tortor quis
-          tellus. In a accumsan nibh, id hendrerit augue. Etiam vehicula id dui
-          vitae gravida. Morbi rutrum nisl diam, vel ultricies erat pellentesque
+          tellus. <br />
+          In a accumsan nibh, id hendrerit augue. Etiam vehicula id dui vitae
+          gravida. Morbi rutrum nisl diam, vel ultricies erat pellentesque
           vitae. Donec purus eros, feugiat in velit sit amet, viverra dictum
           mauris. Donec sed velit id velit porta iaculis. Etiam et pulvinar
           tortor, id porttitor dui. Nam tempus molestie leo, et molestie urna
@@ -107,14 +118,19 @@ export default function Home() {
       </div>
 
       {/* github icon */}
-      <a
-        href="https://github.com/pantanalise"
-        target="_blank"
-        rel="noreferrer"
-        className="flex justify-center pb-2"
-      >
-        <Image src={githubIcon} alt="Retweet icon" />
-      </a>
+      <div className="flex justify-center pb-2">
+        <a
+          href="https://github.com/pantanalise"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Image
+            src={githubIcon}
+            alt="Retweet icon"
+            className="hover:scale-105"
+          />
+        </a>
+      </div>
     </div>
   )
 }
