@@ -1,10 +1,12 @@
 import { Dispatch, SetStateAction } from 'react'
 import Image from 'next/image'
 
-import closeIcon from '../assets/icons/close-icon.svg'
+import closeIconBlack from '../assets/icons/close-icon-black.svg'
+import closeIconWhite from '../assets/icons/close-icon-white.svg'
 import { HistoryItem } from './HistoryItem'
 
 interface HistoryProps {
+  theme: string | undefined
   showHistory: Boolean
   setShowHistory: Dispatch<SetStateAction<boolean>>
   historyList: {
@@ -22,17 +24,17 @@ export function History(props: HistoryProps) {
       {props.showHistory && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-25">
           {/* modal card */}
-          <div className="h-4/5 w-4/5 rounded-xl bg-offwhite p-6 font-ptmono dark:bg-darkgrey">
+          <div className="h-4/5 w-4/5 rounded-xl bg-offwhite p-6 font-ptmono dark:bg-grey">
             {/* modal header section (title and X) */}
             <div className="flex justify-between">
               <Image
-                src={closeIcon}
-                alt="Close icon"
+                src={closeIconBlack}
+                alt=""
                 className="invisible h-5 w-5 "
               />
-              <h2 className="text-4xl">Histórico</h2>
+              <h2 className="text-4xl text-black dark:text-white">Histórico</h2>
               <Image
-                src={closeIcon}
+                src={props.theme === 'dark' ? closeIconWhite : closeIconBlack}
                 alt="Close icon"
                 className="h-5 w-5 hover:cursor-pointer"
                 onClick={() => props.setShowHistory(false)}
@@ -42,7 +44,11 @@ export function History(props: HistoryProps) {
             {props.historyList.length === 0 ? null : (
               <ul className="flex w-full flex-col justify-center gap-y-2 p-6">
                 {props.historyList.map((historyItem) => (
-                  <HistoryItem key={historyItem.id} historyItem={historyItem} />
+                  <HistoryItem
+                    key={historyItem.id}
+                    theme={props.theme}
+                    historyItem={historyItem}
+                  />
                 ))}
               </ul>
             )}

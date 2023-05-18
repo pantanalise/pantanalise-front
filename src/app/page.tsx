@@ -10,7 +10,8 @@ import { InfoCard } from '@/components/InfoCard'
 import { InputArea } from '@/components/InputArea'
 import { ResultModel } from '@/models/resultModel'
 
-import githubIcon from '../assets/icons/github-icon.svg'
+import githubIconBlack from '../assets/icons/github-icon-black.svg'
+import githubIconWhite from '../assets/icons/github-icon-white.svg'
 import moonIcon from '../assets/icons/moon-icon.svg'
 import sunIcon from '../assets/icons/sun-icon.svg'
 
@@ -19,8 +20,9 @@ export default function Home() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
-  // useEffect only runs on the client, so now we can safely show the UI
-  useEffect(() => setMounted(true), [])
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // input text
   const [text, setText] = useState('')
@@ -53,11 +55,14 @@ export default function Home() {
     addToHistory(result)
   }
 
+  if (!mounted) return null
+
   return (
     <div className="flex justify-center bg-offwhite dark:bg-darkgrey">
       <div className="flex w-[60vw] flex-col space-y-8">
         {/* history modal (only shows when history button is clicked) */}
         <History
+          theme={theme}
           showHistory={showHistory}
           setShowHistory={setShowHistory}
           historyList={historyList}
@@ -65,28 +70,31 @@ export default function Home() {
 
         <div className="mt-6 flex flex-row items-center justify-between">
           <button>
-            <Image src={githubIcon} alt="Retweet icon" className="invisible" />
+            <Image src={sunIcon} alt="" className="invisible" />
           </button>
           {/* title */}
-          <h1 className="text-center font-montserrat text-6xl">Engage Max</h1>
-          {mounted && (
-            <button
-              className="self-center"
-              onClick={() =>
-                theme === 'dark' ? setTheme('light') : setTheme('dark')
-              }
-            >
-              <Image
-                src={theme === 'dark' ? sunIcon : moonIcon}
-                alt="Sun or moon icon, depending on the mode"
-                className="hover:scale-105"
-              />
-            </button>
-          )}
+          <h1 className="text-center font-montserrat text-6xl text-black dark:text-white">
+            Engage Max
+          </h1>
+
+          <button
+            className="h-10 w-10 self-center"
+            onClick={() => {
+              console.log(theme)
+              theme === 'dark' ? setTheme('light') : setTheme('dark')
+            }}
+          >
+            <Image
+              src={theme === 'dark' ? sunIcon : moonIcon}
+              alt="Sun or moon icon, depending on the mode"
+              className="hover:scale-105"
+            />
+          </button>
         </div>
 
         {/* input area */}
         <InputArea
+          theme={theme}
           handleSubmit={handleSubmit}
           length={length}
           setShowHistory={setShowHistory}
@@ -95,7 +103,11 @@ export default function Home() {
         />
 
         {/* result card */}
-        <Result result={historyList.at(-1)} showResult={showResult} />
+        <Result
+          result={historyList.at(-1)}
+          showResult={showResult}
+          theme={theme}
+        />
 
         {/* info card */}
         <InfoCard />
@@ -108,7 +120,7 @@ export default function Home() {
             rel="noreferrer"
           >
             <Image
-              src={githubIcon}
+              src={theme === 'dark' ? githubIconWhite : githubIconBlack}
               alt="Retweet icon"
               className="hover:scale-105"
             />
