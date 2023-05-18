@@ -8,6 +8,7 @@ import { History } from '@/components/History'
 import { Result } from '@/components/Result'
 import { InfoCard } from '@/components/InfoCard'
 import { InputArea } from '@/components/InputArea'
+import { ResultModel } from '@/models/resultModel'
 
 export default function Home() {
   // input text
@@ -19,9 +20,7 @@ export default function Home() {
   // show history boolean
   const [showHistory, setShowHistory] = useState(false)
   // history list
-  const [historyList, setHistoryList] = useState<
-    { id: number; text: string; likes: number; retweets: number }[]
-  >([])
+  const [historyList, setHistoryList] = useState<ResultModel[]>([])
   // history current item id
   const [currentHistoryItemId, setCurrentHistoryItemId] = useState(0)
 
@@ -30,31 +29,17 @@ export default function Home() {
     setLength(event.target.value.length)
   }
 
-  const addToHistory = ({
-    id,
-    text,
-    likes,
-    retweets,
-  }: {
-    id: number
-    text: string
-    likes: number
-    retweets: number
-  }) => {
-    setHistoryList([...historyList, { id, text, likes, retweets }])
-    setCurrentHistoryItemId(id + 1)
+  const addToHistory = (result: ResultModel) => {
+    setHistoryList([...historyList, result])
+    setCurrentHistoryItemId(result.id + 1)
   }
 
   // TODO: Call API endpoint
   const handleSubmit = (event: React.FormEvent) => {
     setShowResult(true)
     event.preventDefault()
-    addToHistory({
-      id: currentHistoryItemId,
-      text,
-      likes: 100,
-      retweets: 50,
-    })
+    const result = new ResultModel(currentHistoryItemId, text, 100, 50)
+    addToHistory(result)
   }
 
   return (
@@ -79,10 +64,7 @@ export default function Home() {
       />
 
       {/* result card */}
-      <Result
-        result={{ text, likes: 100, retweets: 50 }}
-        showResult={showResult}
-      />
+      <Result result={historyList.at(-1)} showResult={showResult} />
 
       {/* info card */}
       <InfoCard />
