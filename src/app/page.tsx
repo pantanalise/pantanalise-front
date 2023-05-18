@@ -8,15 +8,41 @@ import arrowIcon from '../assets/icons/arrow-icon.svg'
 import likeIcon from '../assets/icons/like-icon.svg'
 import retweetIcon from '../assets/icons/retweet-icon.svg'
 import githubIcon from '../assets/icons/github-icon.svg'
+import closeIcon from '../assets/icons/close-icon.svg'
 
 export default function Home() {
+  // input text
   const [text, setText] = useState('')
+  // input text length
   const [length, setLength] = useState(0)
+  // show result boolean
   const [showResult, setShowResult] = useState(false)
+  // show history boolean
+  const [showHistory, setShowHistory] = useState(false)
+  // history list
+  const [historyList, setHistoryList] = useState<
+    { id: number; text: string; likes: number; retweets: number }[]
+  >([])
+  const [currentHistoryItemId, setCurrentHistoryItemId] = useState(0)
 
   const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value)
     setLength(event.target.value.length)
+  }
+
+  const addToHistory = ({
+    id,
+    text,
+    likes,
+    retweets,
+  }: {
+    id: number
+    text: string
+    likes: number
+    retweets: number
+  }) => {
+    setHistoryList([...historyList, { id, text, likes, retweets }])
+    setCurrentHistoryItemId(id + 1)
   }
 
   // TODO: Call API endpoint
@@ -25,12 +51,62 @@ export default function Home() {
     // alert(text)
     event.preventDefault()
     // TODO: add to history
+    addToHistory({
+      id: currentHistoryItemId,
+      text,
+      likes: 100,
+      retweets: 50,
+    })
   }
 
   return (
     <div className="flex w-[60vw] flex-col space-y-8">
       {/* history modal */}
-      {}
+      {showHistory && (
+        <>
+          {/* modal background */}
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-25">
+            {/* modal card */}
+            <div className="h-4/5 w-4/5 rounded-xl bg-offwhite p-6 font-ptmono">
+              {/* modal header section (title and X) */}
+              <div className="flex justify-between">
+                <Image
+                  src={closeIcon}
+                  alt="Close icon"
+                  className="invisible h-5 w-5"
+                />
+                <h2 className="text-4xl">Histórico</h2>
+                <Image
+                  src={closeIcon}
+                  alt="Close icon"
+                  className="h-5 w-5 hover:cursor-pointer"
+                  onClick={() => setShowHistory(false)}
+                />
+              </div>
+              {/* modal body section (history list) */}
+              {historyList.length === 0 ? null : (
+                <ul className="flex w-full flex-col justify-center p-6">
+                  {/* history item */}
+                  <li className="flex w-full flex-row items-center justify-between gap-x-3 rounded-md bg-white p-2">
+                    {/* text area */}
+                    <p className="flex-1 text-base">{historyList[0].text}</p>
+                    {/* like area */}
+                    <div className="flex items-center gap-x-1">
+                      <Image src={likeIcon} alt="Heart icon" />
+                      <p className="text-xl">{historyList[0].likes}</p>
+                    </div>
+                    {/* retweet area */}
+                    <div className="flex items-center gap-x-1">
+                      <Image src={retweetIcon} alt="Retweet icon" />
+                      <p className="text-xl">{historyList[0].retweets}</p>
+                    </div>
+                  </li>
+                </ul>
+              )}
+            </div>
+          </div>
+        </>
+      )}
       {/* title */}
       <h1 className="mt-6 text-center font-montserrat text-6xl">Engage Max</h1>
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
@@ -39,20 +115,27 @@ export default function Home() {
           defaultValue={text}
           onChange={textAreaChange}
           maxLength={280}
-          className="text-body focus:border-1.5 block h-[25vh] w-full resize-none rounded-lg border border-grey bg-transparent p-2.5 font-ptmono text-sm text-grey focus:border-black focus:text-black focus:outline-black"
+          className="text-body focus:border-1.5 block h-[25vh] w-full resize-none rounded-lg border border-grey bg-transparent p-2 font-ptmono text-sm text-grey focus:border-black focus:text-black focus:outline-black"
           placeholder="Digite um tweet"
         />
         {/* row: history - char counter - submit */}
         <div className="flex flex-row justify-between">
           {/* history button */}
-          <button className="flex items-center gap-x-2 hover:scale-105">
+          <button
+            type="button"
+            onClick={() => setShowHistory(true)}
+            className="flex items-center gap-x-2 hover:scale-105"
+          >
             <p className="font-ptmono text-sm">Histórico</p>
             <Image src={clockIcon} alt="Clock icon" />
           </button>
           {/* char counter */}
           <p className="font-ptmono text-sm">{length ?? 0}/280</p>
           {/* submit button */}
-          <button className="flex items-center gap-x-2 hover:scale-105">
+          <button
+            type="submit"
+            className="flex items-center gap-x-2 hover:scale-105"
+          >
             <p className="font-ptmono text-sm">Analisar</p>
             <Image src={arrowIcon} alt="Arrow icon" />
           </button>
