@@ -23,6 +23,7 @@ export default function Home() {
   const [historyList, setHistoryList] = useState<
     { id: number; text: string; likes: number; retweets: number }[]
   >([])
+  // history current item id
   const [currentHistoryItemId, setCurrentHistoryItemId] = useState(0)
 
   const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
