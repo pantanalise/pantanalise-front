@@ -41,7 +41,11 @@ export function History(props: HistoryProps) {
               />
             </div>
             {/* modal body section (history list) */}
-            {props.historyList.length === 0 ? null : (
+            {props.historyList.length === 0 ? (
+              <div className="flex h-[90%] w-full items-center justify-center text-grey/80 dark:text-offwhite/80">
+                <p className="self-center">Histórico vazio</p>
+              </div>
+            ) : (
               <ul className="flex w-full flex-col justify-center gap-y-2 p-6">
                 {props.historyList.map((historyItem) => (
                   <HistoryItem
