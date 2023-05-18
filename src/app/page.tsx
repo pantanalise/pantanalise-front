@@ -47,10 +47,10 @@ export default function Home() {
     setCurrentHistoryItemId(result.id + 1)
   }
 
-  // TODO: Call API endpoint
   const handleSubmit = (event: React.FormEvent) => {
     setShowResult(true)
     event.preventDefault()
+    // TODO: Call API endpoint
     const result = new ResultModel(currentHistoryItemId, text, 100, 50)
     addToHistory(result)
   }
