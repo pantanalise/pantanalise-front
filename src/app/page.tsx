@@ -5,10 +5,9 @@ import Image from 'next/image'
 
 import clockIcon from '../assets/icons/clock-icon.svg'
 import arrowIcon from '../assets/icons/arrow-icon.svg'
-import likeIcon from '../assets/icons/like-icon.svg'
-import retweetIcon from '../assets/icons/retweet-icon.svg'
 import githubIcon from '../assets/icons/github-icon.svg'
 import { History } from '@/components/History'
+import { Result } from '@/components/Result'
 
 export default function Home() {
   // input text
@@ -103,32 +102,10 @@ export default function Home() {
       </form>
 
       {/* result card */}
-      {showResult && (
-        <div className="flex w-full flex-col gap-y-3 whitespace-pre-wrap rounded-lg bg-white p-6 text-justify font-ptmono">
-          {
-            // TODO: change text to use result text
-            // TODO: change likeNumber to use result likeNumber
-            // TODO: change retweetNumber to use result retweetNumber
-          }
-          {/* result title */}
-          <h2 className="text-3xl">Resultado</h2>
-          {/* tweet text */}
-          <p className="text-body whitespace-pre-line">{`"${text}"`}</p>
-          {/* results info row */}
-          <div className="flex w-full justify-evenly self-center">
-            {/* likes section */}
-            <div className="mt-4 flex flex-row items-center gap-x-2">
-              <Image src={likeIcon} alt="Heart icon" />
-              <p className="text-3xl">350</p>
-            </div>
-            {/* retweets section */}
-            <div className="flex flex-row items-center gap-x-2">
-              <Image src={retweetIcon} alt="Retweet icon" />
-              <p className="text-3xl">350</p>
-            </div>
-          </div>
-        </div>
-      )}
+      <Result
+        result={{ text, likes: 100, retweets: 50 }}
+        showResult={showResult}
+      />
 
       {/* info card */}
       <div className="flex w-full flex-col rounded-lg bg-white p-6 text-justify font-ptmono">
