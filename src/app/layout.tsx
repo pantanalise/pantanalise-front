@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import './globals.css'
+import { Providers } from './providers'
 
 export const metadata = {
   title: 'Create Next App',
@@ -8,8 +9,10 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body className="flex justify-center bg-offwhite">{children}</body>
+    <html suppressHydrationWarning lang="en">
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }

@@ -12,7 +12,7 @@ interface HistoryItemProps {
 }
 
 export function HistoryItem(props: HistoryItemProps) {
-  const backgroundColor = props.historyItem.id % 2 === 0 ? 'offwhite' : 'white'
+  const backgroundColor = props.historyItem.id % 2 === 0 ? 'white' : 'offwhite'
   return (
     <li
       className={`flex w-full flex-row items-center justify-between gap-x-3 rounded-md bg-${backgroundColor} p-2`}

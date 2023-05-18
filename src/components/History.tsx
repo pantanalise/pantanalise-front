@@ -22,13 +22,13 @@ export function History(props: HistoryProps) {
       {props.showHistory && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-25">
           {/* modal card */}
-          <div className="h-4/5 w-4/5 rounded-xl bg-offwhite p-6 font-ptmono">
+          <div className="h-4/5 w-4/5 rounded-xl bg-offwhite p-6 font-ptmono dark:bg-darkgrey">
             {/* modal header section (title and X) */}
             <div className="flex justify-between">
               <Image
                 src={closeIcon}
                 alt="Close icon"
-                className="invisible h-5 w-5"
+                className="invisible h-5 w-5 "
               />
               <h2 className="text-4xl">Histórico</h2>
               <Image

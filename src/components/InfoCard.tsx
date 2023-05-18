@@ -4,7 +4,7 @@ export function InfoCard() {
       {/* info title */}
       <h2 className="mb-3 text-3xl">Descrição</h2>
       {/* info text */}
-      <p className="text-body whitespace-pre-line">
+      <p className="text-body whitespace-pre-line leading-relaxed">
         O objetivo deste projeto é relacionar polaridade de sentimentos de
         tweets (positiva, negativa e neutra) com o engajamento gerado pelos
         mesmos. A aplicação acima permite que qualquer pessoa escreva um tweet e

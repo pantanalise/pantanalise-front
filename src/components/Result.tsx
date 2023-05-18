@@ -16,7 +16,7 @@ export function Result(props: ResultProps) {
           {/* result title */}
           <h2 className="text-3xl">Resultado</h2>
           {/* tweet text */}
-          <p className="text-body whitespace-pre-line">{`"${props.result?.text}"`}</p>
+          <p className="text-body whitespace-pre-line leading-relaxed">{`"${props.result?.text}"`}</p>
           {/* results info row */}
           <div className="flex w-full justify-evenly self-center">
             {/* likes section */}
