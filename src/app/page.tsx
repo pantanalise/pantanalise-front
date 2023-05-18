@@ -8,7 +8,7 @@ import arrowIcon from '../assets/icons/arrow-icon.svg'
 import likeIcon from '../assets/icons/like-icon.svg'
 import retweetIcon from '../assets/icons/retweet-icon.svg'
 import githubIcon from '../assets/icons/github-icon.svg'
-import closeIcon from '../assets/icons/close-icon.svg'
+import { History } from '@/components/History'
 
 export default function Home() {
   // input text
@@ -49,9 +49,7 @@ export default function Home() {
   // TODO: Call API endpoint
   const handleSubmit = (event: React.FormEvent) => {
     setShowResult(true)
-    // alert(text)
     event.preventDefault()
-    // TODO: add to history
     addToHistory({
       id: currentHistoryItemId,
       text,
@@ -62,52 +60,13 @@ export default function Home() {
 
   return (
     <div className="flex w-[60vw] flex-col space-y-8">
-      {/* history modal */}
-      {showHistory && (
-        <>
-          {/* modal background */}
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-25">
-            {/* modal card */}
-            <div className="h-4/5 w-4/5 rounded-xl bg-offwhite p-6 font-ptmono">
-              {/* modal header section (title and X) */}
-              <div className="flex justify-between">
-                <Image
-                  src={closeIcon}
-                  alt="Close icon"
-                  className="invisible h-5 w-5"
-                />
-                <h2 className="text-4xl">Histórico</h2>
-                <Image
-                  src={closeIcon}
-                  alt="Close icon"
-                  className="h-5 w-5 hover:cursor-pointer"
-                  onClick={() => setShowHistory(false)}
-                />
-              </div>
-              {/* modal body section (history list) */}
-              {historyList.length === 0 ? null : (
-                <ul className="flex w-full flex-col justify-center p-6">
-                  {/* history item */}
-                  <li className="flex w-full flex-row items-center justify-between gap-x-3 rounded-md bg-white p-2">
-                    {/* text area */}
-                    <p className="flex-1 text-base">{historyList[0].text}</p>
-                    {/* like area */}
-                    <div className="flex items-center gap-x-1">
-                      <Image src={likeIcon} alt="Heart icon" />
-                      <p className="text-xl">{historyList[0].likes}</p>
-                    </div>
-                    {/* retweet area */}
-                    <div className="flex items-center gap-x-1">
-                      <Image src={retweetIcon} alt="Retweet icon" />
-                      <p className="text-xl">{historyList[0].retweets}</p>
-                    </div>
-                  </li>
-                </ul>
-              )}
-            </div>
-          </div>
-        </>
-      )}
+      {/* history modal (only shows when history button is clicked) */}
+      <History
+        showHistory={showHistory}
+        setShowHistory={setShowHistory}
+        historyList={historyList}
+      />
+
       {/* title */}
       <h1 className="mt-6 text-center font-montserrat text-6xl">Engage Max</h1>
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
