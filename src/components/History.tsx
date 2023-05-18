@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { Dispatch, SetStateAction } from 'react'
+import Image from 'next/image'
 
 import closeIcon from '../assets/icons/close-icon.svg'
 import { HistoryItem } from './HistoryItem'
