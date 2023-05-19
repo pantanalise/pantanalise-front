@@ -37,13 +37,6 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true)
-    const getInfo = async () => {
-      const apiInfo = await getApiInfo(text)
-      setResult(apiInfo)
-      console.log(result)
-    }
-
-    getInfo()
   }, [])
 
   const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
