@@ -91,7 +91,6 @@ export default function Home() {
   }
 
   const handleSubmit = async (event: React.FormEvent) => {
-    setShowResult(true)
     event.preventDefault()
     // Get likes and retweets prediction
     const { likes, retweets } = await getLikesAndRetweets(text)
@@ -100,6 +99,7 @@ export default function Home() {
     setResult(new ResultModel(currentHistoryItemId, words, likes, retweets))
     if (!result) return
     addToHistory(result)
+    setShowResult(true)
   }
 
   if (!mounted) return null
