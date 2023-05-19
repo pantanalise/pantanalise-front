@@ -17,7 +17,10 @@ interface InputAreaProps {
 
 export function InputArea(props: InputAreaProps) {
   return (
-    <form onSubmit={props.handleSubmit} className="flex flex-col space-y-4">
+    <form
+      onSubmit={(event) => props.handleSubmit(event)}
+      className="flex flex-col space-y-4"
+    >
       <textarea
         defaultValue={props.text}
         onChange={props.textAreaChange}

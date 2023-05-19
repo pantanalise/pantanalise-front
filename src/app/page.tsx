@@ -97,11 +97,7 @@ export default function Home() {
     // Get text words sentiment analysis
     const words = await getWordByWordClassification(text)
     setResult({ id: currentHistoryItemId, words, likes, retweets })
-    if (!result) {
-      console.log('!result')
-      return
-    }
-    addToHistory(result)
+    addToHistory(result ?? { id: currentHistoryItemId, words, likes, retweets })
     setShowResult(true)
   }
 
