@@ -94,7 +94,7 @@ export default function Home() {
     event.preventDefault()
     // Get likes and retweets prediction
     const { likes, retweets } = await getLikesAndRetweets(text)
-    // Get likes and retweets prediction
+    // Get text words sentiment analysis
     const words = await getWordByWordClassification(text)
     setResult(new ResultModel(currentHistoryItemId, words, likes, retweets))
     if (!result) return

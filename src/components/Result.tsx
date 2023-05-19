@@ -31,7 +31,7 @@ export function Result(props: ResultProps) {
               }
               return (
                 <p key={index} className={color}>
-                  {wordResult.word}
+                  {wordResult.word + ' '}
                 </p>
               )
             })}

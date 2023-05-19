@@ -32,7 +32,7 @@ export function HistoryItem(props: HistoryItemProps) {
           }
           return (
             <p key={index} className={color}>
-              {wordResult.word}
+              {wordResult.word + ' '}
             </p>
           )
         })}
