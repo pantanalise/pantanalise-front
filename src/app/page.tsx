@@ -96,8 +96,7 @@ export default function Home() {
           <button
             className="h-10 w-10 self-center"
             onClick={() => {
-              console.log(theme)
-              theme === 'dark' ? setTheme('dark') : setTheme('light')
+              theme === 'dark' ? setTheme('light') : setTheme('dark')
             }}
           >
             <Image
