@@ -66,7 +66,6 @@ export default function Home() {
     )
     const data = await response.json()
     const { likes, retweets } = data.engageRecommend
-    console.log(likes, retweets)
     return { likes, retweets }
   }
 
@@ -87,8 +86,6 @@ export default function Home() {
     )
     const data = await response.json()
     const { sentimentWord: words } = data
-    // result = [{word: string, classification: string}]
-    console.log(words)
     return words
   }
 
@@ -99,6 +96,7 @@ export default function Home() {
     // Get text words sentiment analysis
     const words = await getWordByWordClassification(text)
     setResult(new ResultModel(currentHistoryItemId, words, likes, retweets))
+    console.log(result)
     if (!result) return
     addToHistory(result)
     setShowResult(true)
