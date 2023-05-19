@@ -93,33 +93,25 @@ export default function Home() {
     return new ResultModel(currentHistoryItemId, words, likes, retweets)
   }
 
+  let apiInfo: ResultModel
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
 
-    const apiInfo = await getApiInfo(text)
-
-    Promise.resolve()
-      .then(() => {
-        setResult(apiInfo)
-      })
-      .then(() => {
-        addToHistory(result!)
-        setShowResult(true)
-      })
+    apiInfo = await getApiInfo(text)
 
     setResult(apiInfo)
   }
 
-  // useEffect(() => {
-  //   if (!mounted) return setMounted(true)
-  //   setResult()
-  //   addToHistory(result!)
-  //   setShowResult(true)
-  // }, [result, mounted, addToHistory])
-
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    if (!mounted) return setMounted(true)
+    addToHistory(result!)
+    setShowResult(true)
+  }, [result, mounted, addToHistory])
+
+  // useEffect(() => {
+  //   setMounted(true)
+  // }, [])
 
   if (!mounted) return
 
