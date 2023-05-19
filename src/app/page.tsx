@@ -35,10 +35,6 @@ export default function Home() {
   // history current item id
   const [currentHistoryItemId, setCurrentHistoryItemId] = useState(0)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
   const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value)
     setLength(event.target.value.length)
@@ -102,14 +98,30 @@ export default function Home() {
 
     const apiInfo = await getApiInfo(text)
 
-    setResult(apiInfo)
+    Promise.resolve()
+      .then(() => {
+        setResult(apiInfo)
+      })
+      .then(() => {
+        addToHistory(result!)
+        setShowResult(true)
+      })
 
-    if (!result) return
-    addToHistory(result)
-    setShowResult(true)
+    setResult(apiInfo)
   }
 
-  if (!mounted) return null
+  // useEffect(() => {
+  //   if (!mounted) return setMounted(true)
+  //   setResult()
+  //   addToHistory(result!)
+  //   setShowResult(true)
+  // }, [result, mounted, addToHistory])
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return
 
   return (
     <div className="flex justify-center bg-offwhite dark:bg-darkgrey">
