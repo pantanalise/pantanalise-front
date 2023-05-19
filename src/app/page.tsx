@@ -20,17 +20,13 @@ export default function Home() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
   // input text
   const [text, setText] = useState('')
   // input text length
   const [length, setLength] = useState(0)
   // show result boolean
   const [showResult, setShowResult] = useState(false)
-  // show result boolean
+  // populate result data
   const [result, setResult] = useState<ResultModel>()
   // show history boolean
   const [showHistory, setShowHistory] = useState(false)
@@ -38,6 +34,10 @@ export default function Home() {
   const [historyList, setHistoryList] = useState<ResultModel[]>([])
   // history current item id
   const [currentHistoryItemId, setCurrentHistoryItemId] = useState(0)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [result])
 
   const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value)
