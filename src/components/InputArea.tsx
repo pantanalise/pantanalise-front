@@ -22,7 +22,7 @@ export function InputArea(props: InputAreaProps) {
         defaultValue={props.text}
         onChange={props.textAreaChange}
         maxLength={280}
-        className="text-body focus:border-1.5 block h-[25vh] w-full resize-none rounded-lg border border-grey bg-transparent p-2 font-ptmono text-sm leading-relaxed text-grey focus:border-black focus:text-black focus:outline-black dark:border-offwhite dark:text-offwhite dark:focus:border-white dark:focus:text-white dark:focus:outline-white"
+        className="text-body focus:border-1.5 block h-[25vh] w-full resize-none rounded-lg border border-grey bg-transparent p-2 font-ptmono text-sm leading-relaxed text-grey placeholder:text-grey focus:border-black focus:text-black focus:outline-black dark:border-offwhite dark:text-offwhite dark:placeholder:text-offwhite dark:focus:border-white dark:focus:text-white dark:focus:outline-white"
         placeholder="Digite um tweet"
       />
       {/* row: history - char counter - submit */}
