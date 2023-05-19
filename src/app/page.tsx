@@ -30,6 +30,8 @@ export default function Home() {
   const [length, setLength] = useState(0)
   // show result boolean
   const [showResult, setShowResult] = useState(false)
+  // result variable
+  // const [result, setResult] = useState<ResultModel>()
   // show history boolean
   const [showHistory, setShowHistory] = useState(false)
   // history list
@@ -47,10 +49,24 @@ export default function Home() {
     setCurrentHistoryItemId(result.id + 1)
   }
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     setShowResult(true)
     event.preventDefault()
     // TODO: Call API endpoint
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({ text }),
+    }
+    const response = await fetch(
+      'http://localhost:3333/predict/engage',
+      requestOptions,
+    )
+    const data = await response.json()
+    console.log(data)
     const result = new ResultModel(currentHistoryItemId, text, 100, 50)
     addToHistory(result)
   }
