@@ -101,17 +101,15 @@ export default function Home() {
     apiInfo = await getApiInfo(text)
 
     setResult(apiInfo)
+
+    if (!result) return
+    addToHistory(result)
+    setShowResult(true)
   }
 
   useEffect(() => {
-    if (!mounted) return setMounted(true)
-    addToHistory(result!)
-    setShowResult(true)
-  }, [result, mounted, addToHistory])
-
-  // useEffect(() => {
-  //   setMounted(true)
-  // }, [])
+    setMounted(true)
+  }, [])
 
   if (!mounted) return
 
