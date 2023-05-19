@@ -96,8 +96,9 @@ export default function Home() {
     const { likes, retweets } = await getLikesAndRetweets(text)
     // Get text words sentiment analysis
     const words = await getWordByWordClassification(text)
-    setResult({ id: currentHistoryItemId, words, likes, retweets })
-    addToHistory(result ?? { id: currentHistoryItemId, words, likes, retweets })
+    setResult(new ResultModel(currentHistoryItemId, words, likes, retweets))
+    if (!result) return
+    addToHistory(result)
     setShowResult(true)
   }
 
