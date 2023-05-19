@@ -30,8 +30,6 @@ export default function Home() {
   const [length, setLength] = useState(0)
   // show result boolean
   const [showResult, setShowResult] = useState(false)
-  // result variable
-  // const [result, setResult] = useState<ResultModel>()
   // show history boolean
   const [showHistory, setShowHistory] = useState(false)
   // history list
@@ -49,10 +47,9 @@ export default function Home() {
     setCurrentHistoryItemId(result.id + 1)
   }
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    setShowResult(true)
-    event.preventDefault()
-    // TODO: Call API endpoint
+  const getLikesAndRetweets = async (
+    tweet: string,
+  ): Promise<{ likes: number; retweets: number }> => {
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -67,6 +64,37 @@ export default function Home() {
     const data = await response.json()
     const { likes, retweets } = data.engageRecommend
     console.log(likes, retweets)
+    return { likes, retweets }
+  }
+
+  const getWordByWordClassification = async (
+    tweet: string,
+  ): Promise<[{ word: string; classification: string }]> => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text }),
+    }
+    const response = await fetch(
+      'http://localhost:3333/predict/sentiment',
+      requestOptions,
+    )
+    const data = await response.json()
+    const { sentimentWord: result } = data
+    console.log(result)
+    return [{ word: 'string', classification: 'positive' }]
+  }
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    setShowResult(true)
+    event.preventDefault()
+    // Get likes and retweets prediction
+    const { likes, retweets } = await getLikesAndRetweets(text)
+    // Get likes and retweets prediction
+    const resultAnalysisArray = await getWordByWordClassification(text)
+    // TODO: deal with word by word result
     const result = new ResultModel(currentHistoryItemId, text, likes, retweets)
     addToHistory(result)
   }
