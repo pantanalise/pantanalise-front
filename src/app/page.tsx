@@ -57,7 +57,6 @@ export default function Home() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
       },
       body: JSON.stringify({ text }),
     }
@@ -67,7 +66,8 @@ export default function Home() {
     )
     const data = await response.json()
     console.log(data)
-    const result = new ResultModel(currentHistoryItemId, text, 100, 50)
+    const { likes, retweets } = data.engageRecommend
+    const result = new ResultModel(currentHistoryItemId, text, likes, retweets)
     addToHistory(result)
   }
 
