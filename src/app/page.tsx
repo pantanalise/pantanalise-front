@@ -30,6 +30,8 @@ export default function Home() {
   const [length, setLength] = useState(0)
   // show result boolean
   const [showResult, setShowResult] = useState(false)
+  // show result boolean
+  const [result, setResult] = useState<ResultModel>()
   // show history boolean
   const [showHistory, setShowHistory] = useState(false)
   // history list
@@ -82,9 +84,10 @@ export default function Home() {
       requestOptions,
     )
     const data = await response.json()
-    const { sentimentWord: result } = data
-    console.log(result)
-    return [{ word: 'string', classification: 'positive' }]
+    const { sentimentWord: words } = data
+    // result = [{word: string, classification: string}]
+    console.log(words)
+    return words
   }
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -93,9 +96,9 @@ export default function Home() {
     // Get likes and retweets prediction
     const { likes, retweets } = await getLikesAndRetweets(text)
     // Get likes and retweets prediction
-    const resultAnalysisArray = await getWordByWordClassification(text)
-    // TODO: deal with word by word result
-    const result = new ResultModel(currentHistoryItemId, text, likes, retweets)
+    const words = await getWordByWordClassification(text)
+    setResult(new ResultModel(currentHistoryItemId, words, likes, retweets))
+    if (!result) return
     addToHistory(result)
   }
 
@@ -138,7 +141,7 @@ export default function Home() {
         {/* input area */}
         <InputArea
           theme={theme}
-          handleSubmit={handleSubmit}
+          handleSubmit={async (event) => await handleSubmit(event)}
           length={length}
           setShowHistory={setShowHistory}
           text={text}
@@ -146,11 +149,7 @@ export default function Home() {
         />
 
         {/* result card */}
-        <Result
-          result={historyList.at(-1)}
-          showResult={showResult}
-          theme={theme}
-        />
+        <Result result={result} showResult={showResult} theme={theme} />
 
         {/* info card */}
         <InfoCard />

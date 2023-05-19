@@ -19,7 +19,23 @@ export function Result(props: ResultProps) {
           {/* result title */}
           <h2 className="text-3xl text-black dark:text-white">Resultado</h2>
           {/* tweet text */}
-          <p className="text-body whitespace-pre-line leading-relaxed text-black dark:text-white">{`"${props.result?.text}"`}</p>
+          <p className="text-body whitespace-pre-line leading-relaxed text-black dark:text-white">
+            {props.result?.words.map((wordResult, index) => {
+              let color
+              if (wordResult.classification === 'positive') {
+                color = 'text-green dark:text-green'
+              } else if (wordResult.classification === 'negative') {
+                color = 'text-red dark:text-red'
+              } else {
+                color = 'text-black dark:text-white'
+              }
+              return (
+                <p key={index} className={color}>
+                  {wordResult.word}
+                </p>
+              )
+            })}
+          </p>
           {/* results info row */}
           <div className="flex w-full justify-evenly self-center">
             {/* likes section */}

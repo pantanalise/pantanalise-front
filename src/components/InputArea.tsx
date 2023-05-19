@@ -7,7 +7,7 @@ import clockIconBlack from '../assets/icons/clock-icon-black.svg'
 import clockIconWhite from '../assets/icons/clock-icon-white.svg'
 
 interface InputAreaProps {
-  handleSubmit: (event: FormEvent) => void
+  handleSubmit: (event: FormEvent) => Promise<void>
   text: string
   length: number
   theme: string | undefined

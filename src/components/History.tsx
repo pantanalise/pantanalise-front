@@ -4,17 +4,13 @@ import Image from 'next/image'
 import closeIconBlack from '../assets/icons/close-icon-black.svg'
 import closeIconWhite from '../assets/icons/close-icon-white.svg'
 import { HistoryItem } from './HistoryItem'
+import { ResultModel } from '@/models/resultModel'
 
 interface HistoryProps {
   theme: string | undefined
   showHistory: Boolean
   setShowHistory: Dispatch<SetStateAction<boolean>>
-  historyList: {
-    id: number
-    text: string
-    likes: number
-    retweets: number
-  }[]
+  historyList: ResultModel[]
 }
 
 export function History(props: HistoryProps) {

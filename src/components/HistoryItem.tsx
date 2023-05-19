@@ -3,14 +3,10 @@ import likeIconBlack from '../assets/icons/like-icon-black.svg'
 import likeIconWhite from '../assets/icons/like-icon-white.svg'
 import retweetIconBlack from '../assets/icons/retweet-icon-black.svg'
 import retweetIconWhite from '../assets/icons/retweet-icon-white.svg'
+import { ResultModel } from '@/models/resultModel'
 
 interface HistoryItemProps {
-  historyItem: {
-    id: number
-    text: string
-    likes: number
-    retweets: number
-  }
+  historyItem: ResultModel
   theme: string | undefined
 }
 
@@ -24,7 +20,22 @@ export function HistoryItem(props: HistoryItemProps) {
     >
       {/* text area */}
       <p className="max-w-[70%] flex-1 truncate text-base text-black dark:text-white">
-        {props.historyItem.text}
+        {/* Colorize and print words one by one */}
+        {props.historyItem.words.map((wordResult, index) => {
+          let color
+          if (wordResult.classification === 'positive') {
+            color = 'text-green dark:text-green'
+          } else if (wordResult.classification === 'negative') {
+            color = 'text-red dark:text-red'
+          } else {
+            color = 'text-black dark:text-white'
+          }
+          return (
+            <p key={index} className={color}>
+              {wordResult.word}
+            </p>
+          )
+        })}
       </p>
       {/* like area */}
       <div className="flex items-center gap-x-1">
