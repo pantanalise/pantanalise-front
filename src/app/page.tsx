@@ -65,8 +65,8 @@ export default function Home() {
       requestOptions,
     )
     const data = await response.json()
-    console.log(data)
     const { likes, retweets } = data.engageRecommend
+    console.log(likes, retweets)
     const result = new ResultModel(currentHistoryItemId, text, likes, retweets)
     addToHistory(result)
   }
