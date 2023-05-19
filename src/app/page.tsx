@@ -37,8 +37,14 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true)
-    console.log(result)
-  }, [result])
+    const getInfo = async () => {
+      const apiInfo = await getApiInfo(text)
+      setResult(apiInfo)
+      console.log(result)
+    }
+
+    getInfo()
+  }, [])
 
   const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value)
@@ -90,13 +96,21 @@ export default function Home() {
     return words
   }
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
+  const getApiInfo = async (tweet: string): Promise<ResultModel> => {
     // Get likes and retweets prediction
     const { likes, retweets } = await getLikesAndRetweets(text)
     // Get text words sentiment analysis
     const words = await getWordByWordClassification(text)
-    setResult(new ResultModel(currentHistoryItemId, words, likes, retweets))
+    return new ResultModel(currentHistoryItemId, words, likes, retweets)
+  }
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+
+    const apiInfo = await getApiInfo(text)
+
+    setResult(apiInfo)
+
     if (!result) return
     addToHistory(result)
     setShowResult(true)
