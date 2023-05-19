@@ -37,6 +37,7 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true)
+    console.log(result)
   }, [result])
 
   const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -93,13 +94,13 @@ export default function Home() {
     event.preventDefault()
     // Get likes and retweets prediction
     const { likes, retweets } = await getLikesAndRetweets(text)
-    console.log(`likes: ${likes} - retweets:${retweets}`)
     // Get text words sentiment analysis
     const words = await getWordByWordClassification(text)
-    console.log(`words: ${words}`)
-    setResult(new ResultModel(currentHistoryItemId, words, likes, retweets))
-    console.log(`result: ${result}`)
-    if (!result) return
+    setResult({ id: currentHistoryItemId, words, likes, retweets })
+    if (!result) {
+      console.log('!result')
+      return
+    }
     addToHistory(result)
     setShowResult(true)
   }
