@@ -31,9 +31,9 @@ export function HistoryItem(props: HistoryItemProps) {
             color = 'text-black dark:text-white'
           }
           return (
-            <p key={index} className={color}>
+            <span key={index} className={color}>
               {wordResult.word + ' '}
-            </p>
+            </span>
           )
         })}
       </p>
